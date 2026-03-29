@@ -320,8 +320,8 @@ const KM_TO_MI = 0.621371;
 let unit = 'mi';
 let dpr = window.devicePixelRatio || 1;
 
-const PACE_MIN_MULT = 0.7;
-const PACE_MAX_MULT = 1.5;
+const PACE_MIN_MULT = 0.45;
+const PACE_MAX_MULT = 1.6;
 
 // Each point marks the start of a flat segment. y is in [0,1] mapped to multiplier range.
 let points = [
@@ -689,10 +689,10 @@ function renderSegmentEditor() {
       </div>
       <div class="seg-pace">${formatPace(pace)}<span style="font-size:0.7rem;font-weight:400;color:var(--text-muted)">/${unit}</span></div>
       <div class="seg-slider-wrap">
-        <span style="font-size:0.7rem;color:var(--text-muted)">fast</span>
+        <span style="font-size:0.8rem;color:var(--text-muted)">−</span>
         <input type="range" class="seg-slider" min="${minPace}" max="${maxPace}" step="0.01" value="${pace}"
           oninput="adjustSegmentPace(${i}, parseFloat(this.value))">
-        <span style="font-size:0.7rem;color:var(--text-muted)">slow</span>
+        <span style="font-size:0.8rem;color:var(--text-muted)">+</span>
       </div>
       <div class="seg-actions">
         ${splitting ? `
