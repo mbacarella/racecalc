@@ -294,7 +294,7 @@
 <div class="graph-container">
   <div class="graph-header">
     <span class="graph-title">Pacing Profile</span>
-    <span class="graph-hint">Drag steps up/down &middot; Double-click to split &middot; Right-click point to remove</span>
+    <span class="graph-hint">Drag steps up/down &middot; Double-click/tap to split &middot; Right-click/long-press to remove</span>
   </div>
   <canvas id="graph"></canvas>
   <div class="point-controls">
@@ -937,12 +937,38 @@ canvas.addEventListener('contextmenu', e => {
 });
 
 // Touch support
+// Tap an empty area to add a split point
+// Long-press a point to remove it
+let touchStart = null;
+let longPressTimer = null;
+let touchMoved = false;
+
 canvas.addEventListener('touchstart', e => {
   e.preventDefault();
   const touch = e.touches[0];
   const rect = canvas.getBoundingClientRect();
   const mx = (touch.clientX - rect.left) * dpr;
   const my = (touch.clientY - rect.top) * dpr;
+  touchMoved = false;
+  touchStart = { mx, my, time: Date.now() };
+
+  const ptIdx = findPoint(mx, my);
+
+  // Long-press on a point to remove it
+  clearTimeout(longPressTimer);
+  if (ptIdx > 0) {
+    longPressTimer = setTimeout(() => {
+      if (!touchMoved) {
+        points.splice(ptIdx, 1);
+        dragging = null;
+        dragMode = null;
+        recalc();
+        draw();
+        touchStart = null; // consumed
+      }
+    }, 500);
+  }
+
   handleDown(mx, my, false);
 }, { passive: false });
 
@@ -953,10 +979,33 @@ canvas.addEventListener('touchmove', e => {
   const rect = canvas.getBoundingClientRect();
   const mx = (touch.clientX - rect.left) * dpr;
   const my = (touch.clientY - rect.top) * dpr;
+  if (touchStart && Math.hypot(mx - touchStart.mx, my - touchStart.my) > 5 * dpr) {
+    touchMoved = true;
+    clearTimeout(longPressTimer);
+  }
   handleMove(mx, my);
 }, { passive: false });
 
-canvas.addEventListener('touchend', () => { dragging = null; dragMode = null; });
+canvas.addEventListener('touchend', e => {
+  clearTimeout(longPressTimer);
+  const wasDrag = touchMoved;
+  const ts = touchStart;
+
+  dragging = null;
+  dragMode = null;
+  touchStart = null;
+
+  // Quick tap without drag = add a split point
+  if (!wasDrag && ts && Date.now() - ts.time < 300) {
+    const ptIdx = findPoint(ts.mx, ts.my);
+    if (ptIdx < 0) {
+      // Not on an existing point — add a new split
+      handleDown(ts.mx, ts.my, true);
+      dragging = null;
+      dragMode = null;
+    }
+  }
+});
 
 // --- Presets ---
 
