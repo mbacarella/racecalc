@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Race Calculator</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: #2a2d3a;
+      --text: #e4e4e7;
+      --text-muted: #8b8d9a;
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.3);
+      --green: #22c55e;
+      --orange: #f59e0b;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: end;
+      margin-bottom: 1.5rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .field label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    select, input {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.6rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    select:focus, input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    select { cursor: pointer; min-width: 180px; }
+    input[type="text"]#basePace { width: 100px; font-variant-numeric: tabular-nums; }
+
+    .splits-table {
+      margin-top: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .splits-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .splits-table th {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .splits-table td {
+      padding: 0.55rem 1rem;
+      font-size: 0.9rem;
+      font-variant-numeric: tabular-nums;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .splits-table tr:last-child td { border-bottom: none; }
+
+    .splits-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .splits-table .split-fast { color: var(--green); }
+    .splits-table .split-slow { color: #ef4444; }
+
+    .results {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      min-width: 160px;
+    }
+
+    .stat .label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .stat .value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stat .value.accent { color: var(--accent); }
+    .stat .value.green { color: var(--green); }
+    .stat .value.orange { color: var(--orange); }
+
+    .graph-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .graph-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .graph-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .graph-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      border-radius: 8px;
+      cursor: crosshair;
+    }
+
+    .point-controls {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      border-color: var(--accent);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    button.danger:hover {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .unit-toggle {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .unit-toggle button {
+      border: none;
+      border-radius: 0;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    .unit-toggle button.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 1rem; }
+      h1 { font-size: 1.4rem; }
+      .stat { min-width: 120px; padding: 0.75rem 1rem; }
+      .stat .value { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Race Calculator</h1>
+<p class="subtitle">Drag points on the graph to model your pacing strategy</p>
+
+<div class="controls">
+  <div class="field">
+    <label>Race Distance</label>
+    <select id="distance">
+      <option value="5">5K</option>
+      <option value="10">10K</option>
+      <option value="15">15K</option>
+      <option value="21.0975" selected>Half Marathon</option>
+      <option value="42.195">Marathon</option>
+      <option value="50">50K Ultra</option>
+      <option value="80.4672">50 Mile Ultra</option>
+      <option value="100">100K Ultra</option>
+      <option value="160.934">100 Mile Ultra</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Base Pace (min/mi)</label>
+    <input type="text" id="basePace" value="8:30" placeholder="M:SS" inputmode="numeric">
+  </div>
+  <div class="field">
+    <label>Units</label>
+    <div class="unit-toggle">
+      <button data-unit="km" onclick="setUnit('km')">km</button>
+      <button class="active" data-unit="mi" onclick="setUnit('mi')">mi</button>
+    </div>
+  </div>
+</div>
+
+<div class="results">
+  <div class="stat">
+    <div class="label">Estimated Finish</div>
+    <div class="value accent" id="finishTime">--:--:--</div>
+  </div>
+  <div class="stat">
+    <div class="label">Avg Pace</div>
+    <div class="value green" id="avgPace">--:--</div>
+  </div>
+  <div class="stat">
+    <div class="label">Avg Speed</div>
+    <div class="value orange" id="avgSpeed">-- km/h</div>
+  </div>
+  <div class="stat">
+    <div class="label">Distance</div>
+    <div class="value" id="distDisplay">21.1 km</div>
+  </div>
+</div>
+
+<div class="graph-container">
+  <div class="graph-header">
+    <span class="graph-title">Pacing Profile</span>
+    <span class="graph-hint">Drag steps up/down &middot; Double-click to split &middot; Right-click point to remove</span>
+  </div>
+  <canvas id="graph"></canvas>
+  <div class="point-controls">
+    <button onclick="resetPoints()">Reset to flat</button>
+    <button onclick="presetNegativeSplit()">Negative split</button>
+    <button onclick="presetPositiveSplit()">Positive split</button>
+    <button onclick="presetFadeFinish()">Late fade</button>
+    <button class="danger" onclick="clearMiddlePoints()">Clear points</button>
+  </div>
+</div>
+
+<div class="splits-table" id="splitsContainer">
+  <table>
+    <thead>
+      <tr>
+        <th>Split</th>
+        <th>Pace</th>
+        <th>Split Time</th>
+        <th>Elapsed</th>
+      </tr>
+    </thead>
+    <tbody id="splitsBody"></tbody>
+  </table>
+</div>
+
+<script>
+const canvas = document.getElementById('graph');
+const ctx = canvas.getContext('2d');
+const distSelect = document.getElementById('distance');
+const basePaceInput = document.getElementById('basePace');
+
+const KM_TO_MI = 0.621371;
+let unit = 'mi';
+let dpr = window.devicePixelRatio || 1;
+
+const PACE_MIN_MULT = 0.7;
+const PACE_MAX_MULT = 1.5;
+
+// Points are stored as { x: 0-1 (fraction of race), y: 0-1 (pace multiplier mapped) }
+// y=0 means fastest (base * 0.7), y=1 means slowest (base * 1.5)
+let points = [
+  { x: 0, y: (1.0 - PACE_MIN_MULT) / (PACE_MAX_MULT - PACE_MIN_MULT) },
+];
+
+const GRAPH_PADDING = { top: 30, right: 20, bottom: 45, left: 55 };
+const POINT_RADIUS = 7;
+
+let dragging = null;
+let hovered = null;
+
+function yToPaceMultiplier(y) {
+  return PACE_MIN_MULT + y * (PACE_MAX_MULT - PACE_MIN_MULT);
+}
+
+function paceMultiplierToY(m) {
+  return (m - PACE_MIN_MULT) / (PACE_MAX_MULT - PACE_MIN_MULT);
+}
+
+function getDistance() {
+  return parseFloat(distSelect.value);
+}
+
+function parsePace(str) {
+  str = str.trim();
+  if (str.includes(':')) {
+    const [m, s] = str.split(':');
+    return parseInt(m, 10) + (parseInt(s, 10) || 0) / 60;
+  }
+  return parseFloat(str) || 0;
+}
+
+function decimalToMSS(dec) {
+  const totalSeconds = Math.round(dec * 60);
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds % 60;
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
+
+function getBasePace() {
+  return parsePace(basePaceInput.value) || 8.5;
+}
+
+function getDisplayDistance() {
+  const km = getDistance();
+  return unit === 'mi' ? km * KM_TO_MI : km;
+}
+
+function setUnit(u) {
+  const oldUnit = unit;
+  unit = u;
+  document.querySelectorAll('.unit-toggle button').forEach(b => {
+    b.classList.toggle('active', b.dataset.unit === u);
+  });
+  const label = basePaceInput.parentElement.querySelector('label');
+  label.textContent = unit === 'mi' ? 'Base Pace (min/mi)' : 'Base Pace (min/km)';
+  // Convert displayed pace between units
+  const currentPace = parsePace(basePaceInput.value);
+  if (oldUnit === 'km' && u === 'mi') {
+    basePaceInput.value = decimalToMSS(currentPace / KM_TO_MI);
+  } else if (oldUnit === 'mi' && u === 'km') {
+    basePaceInput.value = decimalToMSS(currentPace * KM_TO_MI);
+  }
+  recalc();
+  draw();
+}
+
+function sortPoints() {
+  points.sort((a, b) => a.x - b.x);
+}
+
+function getGraphArea() {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: GRAPH_PADDING.left,
+    y: GRAPH_PADDING.top,
+    w: rect.width * dpr - GRAPH_PADDING.left - GRAPH_PADDING.right,
+    h: rect.height * dpr - GRAPH_PADDING.top - GRAPH_PADDING.bottom,
+  };
+}
+
+// Compute visible Y range based on current points, auto-zoomed with padding
+function getViewRange() {
+  let minY = Infinity, maxY = -Infinity;
+  const baseY = paceMultiplierToY(1.0);
+  for (const p of points) {
+    minY = Math.min(minY, p.y);
+    maxY = Math.max(maxY, p.y);
+  }
+  // Always include base pace in the view
+  minY = Math.min(minY, baseY);
+  maxY = Math.max(maxY, baseY);
+
+  // Ensure a minimum visible range (~±1 min/unit around base)
+  const basePace = getBasePace();
+  const oneMinRange = 1.0 / basePace / (PACE_MAX_MULT - PACE_MIN_MULT);
+  const minSpan = Math.max(0.25, oneMinRange * 2);
+
+  let span = maxY - minY;
+  if (span < minSpan) {
+    const mid = (minY + maxY) / 2;
+    minY = mid - minSpan / 2;
+    maxY = mid + minSpan / 2;
+    span = minSpan;
+  }
+
+  // Add padding (30% of span on each side)
+  const pad = span * 0.3;
+  minY -= pad;
+  maxY += pad;
+
+  // Clamp to valid range
+  minY = Math.max(0, minY);
+  maxY = Math.min(1, maxY);
+
+  return { minY, maxY };
+}
+
+function pointToCanvas(p) {
+  const area = getGraphArea();
+  const { minY, maxY } = getViewRange();
+  return {
+    cx: area.x + p.x * area.w,
+    cy: area.y + ((p.y - minY) / (maxY - minY)) * area.h,
+  };
+}
+
+function canvasToPoint(cx, cy) {
+  const area = getGraphArea();
+  const { minY, maxY } = getViewRange();
+  return {
+    x: Math.max(0, Math.min(1, (cx - area.x) / area.w)),
+    y: Math.max(0, Math.min(1, minY + ((cy - area.y) / area.h) * (maxY - minY))),
+  };
+}
+
+function interpolatePace(fraction) {
+  // Step function: each segment uses its left point's y value
+  for (let i = points.length - 1; i >= 0; i--) {
+    if (fraction >= points[i].x) {
+      return yToPaceMultiplier(points[i].y);
+    }
+  }
+  return yToPaceMultiplier(points[0].y);
+}
+
+function recalc() {
+  const distKm = getDistance();
+  const basePace = getBasePace(); // min per unit
+  const steps = 500;
+  let totalMinutes = 0;
+
+  for (let i = 0; i < steps; i++) {
+    const frac = (i + 0.5) / steps;
+    const mult = interpolatePace(frac);
+    const segmentDist = distKm / steps; // in km
+    // basePace is in min/unit, we need to convert segment to the same unit
+    const segmentInUnit = unit === 'mi' ? segmentDist * KM_TO_MI : segmentDist;
+    totalMinutes += segmentInUnit * basePace * mult;
+  }
+
+  const avgPacePerUnit = totalMinutes / (unit === 'mi' ? distKm * KM_TO_MI : distKm);
+  const avgSpeedKmh = (distKm / totalMinutes) * 60;
+  const avgSpeedDisplay = unit === 'mi' ? avgSpeedKmh * KM_TO_MI : avgSpeedKmh;
+
+  document.getElementById('finishTime').textContent = formatTime(totalMinutes);
+  document.getElementById('avgPace').textContent = formatPace(avgPacePerUnit) + '/' + (unit === 'mi' ? 'mi' : 'km');
+  document.getElementById('avgSpeed').textContent = avgSpeedDisplay.toFixed(1) + (unit === 'mi' ? ' mph' : ' km/h');
+
+  const dispDist = getDisplayDistance();
+  document.getElementById('distDisplay').textContent =
+    (dispDist % 1 === 0 ? dispDist.toFixed(0) : dispDist.toFixed(1)) + ' ' + unit;
+
+  renderSplits(distKm, basePace);
+}
+
+function renderSplits(distKm, basePace) {
+  const tbody = document.getElementById('splitsBody');
+  const splitUnitKm = unit === 'mi' ? 1 / KM_TO_MI : 1; // 1 mi or 1 km in km
+  const totalSplits = Math.ceil(distKm / splitUnitKm);
+  const steps = 200;
+  let elapsed = 0;
+  let rows = '';
+
+  for (let s = 0; s < totalSplits; s++) {
+    const startKm = s * splitUnitKm;
+    const endKm = Math.min((s + 1) * splitUnitKm, distKm);
+    const segKm = endKm - startKm;
+    let splitTime = 0;
+
+    for (let i = 0; i < steps; i++) {
+      const frac = (startKm + (i + 0.5) * segKm / steps) / distKm;
+      const mult = interpolatePace(frac);
+      const segDist = unit === 'mi' ? (segKm / steps) * KM_TO_MI : segKm / steps;
+      splitTime += segDist * basePace * mult;
+    }
+
+    elapsed += splitTime;
+    const splitDist = unit === 'mi' ? segKm * KM_TO_MI : segKm;
+    const splitPace = splitTime / splitDist;
+    const isLast = endKm >= distKm - 0.001;
+    const splitLabel = isLast && splitDist < (unit === 'mi' ? 0.99 : 0.99)
+      ? `${(s * (unit === 'mi' ? 1 : 1) + splitDist).toFixed(2)} ${unit}`
+      : `${s + 1}`;
+    const paceClass = splitPace < basePace * 0.97 ? 'split-fast' : splitPace > basePace * 1.03 ? 'split-slow' : '';
+
+    rows += `<tr>
+      <td>${splitLabel}</td>
+      <td class="${paceClass}">${formatPace(splitPace)}/${unit}</td>
+      <td>${formatTime(splitTime)}</td>
+      <td>${formatTime(elapsed)}</td>
+    </tr>`;
+  }
+
+  tbody.innerHTML = rows;
+}
+
+function formatTime(minutes) {
+  const h = Math.floor(minutes / 60);
+  const m = Math.floor(minutes % 60);
+  const s = Math.floor((minutes * 60) % 60);
+  if (h > 0) return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
+
+function formatPace(minPerUnit) {
+  const totalSeconds = Math.round(minPerUnit * 60);
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds % 60;
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
+
+function resizeCanvas() {
+  const rect = canvas.getBoundingClientRect();
+  dpr = window.devicePixelRatio || 1;
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+}
+
+function draw() {
+  resizeCanvas();
+  const w = canvas.width;
+  const h = canvas.height;
+  const area = getGraphArea();
+  const basePace = getBasePace();
+
+  ctx.clearRect(0, 0, w, h);
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.lineWidth = 1;
+
+  // Pace grid at :00 and :30 intervals, within the visible view range
+  const view = getViewRange();
+  const viewMinPace = basePace * yToPaceMultiplier(view.minY);
+  const viewMaxPace = basePace * yToPaceMultiplier(view.maxY);
+  const firstTick = Math.ceil(viewMinPace * 2) / 2;
+  const lastTick = Math.floor(viewMaxPace * 2) / 2;
+  for (let pace = firstTick; pace <= lastTick; pace += 0.5) {
+    const mult = pace / basePace;
+    const yFrac = paceMultiplierToY(mult);
+    const viewY = (yFrac - view.minY) / (view.maxY - view.minY);
+    const y = area.y + viewY * area.h;
+    if (y < area.y - 1 || y > area.y + area.h + 1) continue;
+    ctx.beginPath();
+    ctx.moveTo(area.x, y);
+    ctx.lineTo(area.x + area.w, y);
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.font = `${11 * dpr}px -apple-system, system-ui, sans-serif`;
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(formatPace(pace), area.x - 8, y);
+  }
+
+  // Distance labels
+  const distKm = getDistance();
+  // Distance grid at whole and half mile/km marks
+  const dispDist = getDisplayDistance();
+  // Choose tick interval: 0.5 for short races, 1 for medium, 2/5 for ultras
+  let distTick = 0.5;
+  if (dispDist > 20) distTick = 1;
+  if (dispDist > 40) distTick = 2;
+  if (dispDist > 80) distTick = 5;
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  for (let d = 0; d <= dispDist; d += distTick) {
+    const frac = d / dispDist;
+    const x = area.x + frac * area.w;
+    const isWhole = Math.abs(d - Math.round(d)) < 0.01;
+    ctx.strokeStyle = isWhole ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.04)';
+    ctx.beginPath();
+    ctx.moveTo(x, area.y);
+    ctx.lineTo(x, area.y + area.h);
+    ctx.stroke();
+
+    // Only label whole numbers (and halves for short races)
+    if (isWhole || (distTick === 0.5 && dispDist <= 10)) {
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      const label = isWhole ? Math.round(d).toString() : d.toFixed(1);
+      ctx.fillText(label, x, area.y + area.h + 8);
+    }
+  }
+
+  // Axis labels
+  ctx.fillStyle = 'rgba(255,255,255,0.25)';
+  ctx.font = `${10 * dpr}px -apple-system, system-ui, sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.fillText('Distance', area.x + area.w / 2, area.y + area.h + 28);
+
+  ctx.save();
+  ctx.translate(14, area.y + area.h / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText('Pace (min/' + unit + ')', 0, 0);
+  ctx.restore();
+
+  // Staircase fill and stroke
+  const gradient = ctx.createLinearGradient(0, area.y, 0, area.y + area.h);
+  gradient.addColorStop(0, 'rgba(99, 102, 241, 0.25)');
+  gradient.addColorStop(1, 'rgba(99, 102, 241, 0.02)');
+
+  // Map a point's y value to canvas y using the view range
+  function viewY(py) {
+    return area.y + ((py - view.minY) / (view.maxY - view.minY)) * area.h;
+  }
+
+  // Build staircase path
+  function buildStairPath() {
+    ctx.moveTo(area.x, area.y + area.h);
+    for (let i = 0; i < points.length; i++) {
+      const nextX = i < points.length - 1 ? points[i + 1].x : 1;
+      const sy = viewY(points[i].y);
+      const sx1 = area.x + points[i].x * area.w;
+      const sx2 = area.x + nextX * area.w;
+      ctx.lineTo(sx1, sy);
+      ctx.lineTo(sx2, sy);
+    }
+    ctx.lineTo(area.x + area.w, area.y + area.h);
+  }
+
+  ctx.beginPath();
+  buildStairPath();
+  ctx.closePath();
+  ctx.fillStyle = gradient;
+  ctx.fill();
+
+  ctx.beginPath();
+  // Stroke just the top staircase (not the bottom closing line)
+  for (let i = 0; i < points.length; i++) {
+    const nextX = i < points.length - 1 ? points[i + 1].x : 1;
+    const sy = viewY(points[i].y);
+    const sx1 = area.x + points[i].x * area.w;
+    const sx2 = area.x + nextX * area.w;
+    if (i === 0) ctx.moveTo(sx1, sy);
+    else ctx.lineTo(sx1, sy);
+    ctx.lineTo(sx2, sy);
+  }
+  ctx.strokeStyle = '#6366f1';
+  ctx.lineWidth = 2.5 * dpr;
+  ctx.stroke();
+
+  // Base pace reference line
+  const baseYFrac = (paceMultiplierToY(1.0) - view.minY) / (view.maxY - view.minY);
+  const baseY = area.y + baseYFrac * area.h;
+  ctx.setLineDash([4 * dpr, 4 * dpr]);
+  ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(area.x, baseY);
+  ctx.lineTo(area.x + area.w, baseY);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Points (drawn at the left edge of each step)
+  points.forEach((p, i) => {
+    const { cx, cy } = pointToCanvas(p);
+    const isHovered = hovered === i;
+    const isDragging = dragging === i;
+    const r = POINT_RADIUS * dpr * (isHovered || isDragging ? 1.3 : 1);
+
+    // Glow
+    ctx.beginPath();
+    ctx.arc(cx, cy, r + 4 * dpr, 0, Math.PI * 2);
+    ctx.fillStyle = isDragging ? 'rgba(99, 102, 241, 0.4)' : 'rgba(99, 102, 241, 0.15)';
+    ctx.fill();
+
+    // Point
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fillStyle = (i === 0 || i === points.length - 1) ? '#4f46e5' : '#6366f1';
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2 * dpr;
+    ctx.stroke();
+
+    // Vertical transition lines at split points (except first)
+    if (i > 0) {
+      const prevY = viewY(points[i - 1].y);
+      ctx.beginPath();
+      ctx.moveTo(cx, prevY);
+      ctx.lineTo(cx, cy);
+      ctx.strokeStyle = 'rgba(99, 102, 241, 0.4)';
+      ctx.lineWidth = 1.5 * dpr;
+      ctx.setLineDash([3 * dpr, 3 * dpr]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // Tooltip on hover/drag
+    if (isHovered || isDragging) {
+      const mult = yToPaceMultiplier(p.y);
+      const pace = basePace * mult;
+      const nextX = i < points.length - 1 ? points[i + 1].x : 1;
+      const startDist = (p.x * dispDist).toFixed(1);
+      const endDist = (nextX * dispDist).toFixed(1);
+      const label = `${startDist}–${endDist} ${unit} @ ${formatPace(pace)}/${unit}`;
+
+      ctx.font = `bold ${11 * dpr}px -apple-system, system-ui, sans-serif`;
+      const tw = ctx.measureText(label).width;
+      const midX = area.x + ((p.x + nextX) / 2) * area.w;
+      const tx = Math.max(area.x, Math.min(midX - tw / 2 - 8, area.x + area.w - tw - 16));
+      const ty = cy - 32 * dpr;
+
+      ctx.fillStyle = 'rgba(0,0,0,0.85)';
+      ctx.beginPath();
+      ctx.roundRect(tx, ty, tw + 16, 22 * dpr, 6);
+      ctx.fill();
+
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(label, tx + 8, ty + 11 * dpr);
+    }
+  });
+}
+
+// --- Interaction ---
+// dragMode: 'point' = dragging a point handle (can move x+y), 'segment' = dragging a flat segment (y only)
+let dragMode = null;
+
+function getMousePos(e) {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: (e.clientX - rect.left) * dpr,
+    y: (e.clientY - rect.top) * dpr,
+  };
+}
+
+function findPoint(mx, my) {
+  const hitRadius = POINT_RADIUS * dpr * 2;
+  for (let i = points.length - 1; i >= 0; i--) {
+    const { cx, cy } = pointToCanvas(points[i]);
+    const dist = Math.hypot(mx - cx, my - cy);
+    if (dist < hitRadius) return i;
+  }
+  return -1;
+}
+
+// Find which segment (index of left point) the mouse is over
+function findSegment(mx, my) {
+  const area = getGraphArea();
+  const view = getViewRange();
+  const p = canvasToPoint(mx, my);
+  const hitY = 12 * dpr; // vertical tolerance from the step line
+  for (let i = 0; i < points.length; i++) {
+    const nextX = i < points.length - 1 ? points[i + 1].x : 1;
+    if (p.x >= points[i].x && p.x <= nextX) {
+      const lineY = area.y + ((points[i].y - view.minY) / (view.maxY - view.minY)) * area.h;
+      if (Math.abs(my - lineY) < hitY) return i;
+      return -1; // right segment but too far from line
+    }
+  }
+  return -1;
+}
+
+function handleDown(mx, my, isDoubleClick) {
+  const ptIdx = findPoint(mx, my);
+  if (ptIdx >= 0) {
+    dragging = ptIdx;
+    dragMode = 'point';
+    draw();
+    return;
+  }
+
+  const segIdx = findSegment(mx, my);
+  if (segIdx >= 0) {
+    if (isDoubleClick) {
+      // Double-click on segment: add a split point here
+      const p = canvasToPoint(mx, my);
+      const newPt = { x: p.x, y: points[segIdx].y };
+      points.push(newPt);
+      sortPoints();
+      dragging = points.indexOf(newPt);
+      dragMode = 'point';
+    } else {
+      // Single click drag on segment: adjust that segment's pace
+      dragging = segIdx;
+      dragMode = 'segment';
+    }
+    recalc();
+    draw();
+    return;
+  }
+
+  // Click in empty graph area: add a new split point
+  const p = canvasToPoint(mx, my);
+  if (p.x > 0.01 && p.x < 0.99) {
+    // Find which segment this falls in and use that segment's y
+    let segY = 0.5;
+    for (let i = points.length - 1; i >= 0; i--) {
+      if (p.x >= points[i].x) { segY = points[i].y; break; }
+    }
+    const newPt = { x: p.x, y: segY };
+    points.push(newPt);
+    sortPoints();
+    dragging = points.indexOf(newPt);
+    dragMode = 'point';
+    recalc();
+    draw();
+  }
+}
+
+function handleMove(mx, my) {
+  if (dragging !== null) {
+    const p = canvasToPoint(mx, my);
+    if (dragMode === 'segment') {
+      // Only adjust y (pace) for the segment
+      points[dragging].y = Math.max(0, Math.min(1, p.y));
+    } else {
+      // Point handle: first point locked to x=0
+      if (dragging === 0) {
+        points[dragging].y = Math.max(0, Math.min(1, p.y));
+      } else {
+        // Clamp x between neighbors
+        const prevX = points[dragging - 1].x + 0.005;
+        const nextX = dragging < points.length - 1 ? points[dragging + 1].x - 0.005 : 0.99;
+        points[dragging].x = Math.max(prevX, Math.min(nextX, p.x));
+        points[dragging].y = Math.max(0, Math.min(1, p.y));
+      }
+    }
+    recalc();
+    draw();
+  } else {
+    const ptIdx = findPoint(mx, my);
+    const segIdx = ptIdx < 0 ? findSegment(mx, my) : -1;
+    const newHover = ptIdx >= 0 ? ptIdx : (segIdx >= 0 ? segIdx : null);
+    if (newHover !== hovered) {
+      hovered = newHover;
+      canvas.style.cursor = ptIdx >= 0 ? 'grab' : segIdx >= 0 ? 'ns-resize' : 'crosshair';
+      draw();
+    }
+  }
+}
+
+canvas.addEventListener('mousedown', e => {
+  if (e.button === 2) return;
+  const { x, y } = getMousePos(e);
+  handleDown(x, y, false);
+});
+
+canvas.addEventListener('dblclick', e => {
+  const { x, y } = getMousePos(e);
+  // Reset any drag from the first click
+  dragging = null;
+  dragMode = null;
+  handleDown(x, y, true);
+});
+
+canvas.addEventListener('mousemove', e => {
+  const { x, y } = getMousePos(e);
+  handleMove(x, y);
+});
+
+canvas.addEventListener('mouseup', () => {
+  if (dragMode === 'point' && dragging !== null) {
+    canvas.style.cursor = 'grab';
+  }
+  dragging = null;
+  dragMode = null;
+});
+
+canvas.addEventListener('mouseleave', () => {
+  dragging = null;
+  dragMode = null;
+  hovered = null;
+  draw();
+});
+
+canvas.addEventListener('contextmenu', e => {
+  e.preventDefault();
+  const { x, y } = getMousePos(e);
+  const idx = findPoint(x, y);
+  // Allow removing any point except the first (must keep at least one)
+  if (idx > 0) {
+    points.splice(idx, 1);
+    recalc();
+    draw();
+  }
+});
+
+// Touch support
+canvas.addEventListener('touchstart', e => {
+  e.preventDefault();
+  const touch = e.touches[0];
+  const rect = canvas.getBoundingClientRect();
+  const mx = (touch.clientX - rect.left) * dpr;
+  const my = (touch.clientY - rect.top) * dpr;
+  handleDown(mx, my, false);
+}, { passive: false });
+
+canvas.addEventListener('touchmove', e => {
+  e.preventDefault();
+  if (dragging === null) return;
+  const touch = e.touches[0];
+  const rect = canvas.getBoundingClientRect();
+  const mx = (touch.clientX - rect.left) * dpr;
+  const my = (touch.clientY - rect.top) * dpr;
+  handleMove(mx, my);
+}, { passive: false });
+
+canvas.addEventListener('touchend', () => { dragging = null; dragMode = null; });
+
+// --- Presets ---
+
+function resetPoints() {
+  const base = paceMultiplierToY(1.0);
+  points = [{ x: 0, y: base }];
+  recalc(); draw();
+}
+
+function presetNegativeSplit() {
+  const b = paceMultiplierToY(1.0);
+  points = [
+    { x: 0, y: b + 0.12 },
+    { x: 0.33, y: b },
+    { x: 0.66, y: b - 0.1 },
+  ];
+  recalc(); draw();
+}
+
+function presetPositiveSplit() {
+  const b = paceMultiplierToY(1.0);
+  points = [
+    { x: 0, y: b - 0.1 },
+    { x: 0.33, y: b },
+    { x: 0.66, y: b + 0.15 },
+  ];
+  recalc(); draw();
+}
+
+function presetFadeFinish() {
+  const b = paceMultiplierToY(1.0);
+  points = [
+    { x: 0, y: b },
+    { x: 0.75, y: b + 0.15 },
+    { x: 0.9, y: b + 0.25 },
+  ];
+  recalc(); draw();
+}
+
+function clearMiddlePoints() {
+  points = [points[0]];
+  recalc(); draw();
+}
+
+// --- Init ---
+
+distSelect.addEventListener('change', () => { recalc(); draw(); });
+basePaceInput.addEventListener('input', () => { recalc(); draw(); });
+basePaceInput.addEventListener('blur', () => {
+  const pace = parsePace(basePaceInput.value);
+  if (pace > 0) basePaceInput.value = decimalToMSS(pace);
+});
+window.addEventListener('resize', () => { recalc(); draw(); });
+
+// Set canvas height
+canvas.style.height = '350px';
+recalc();
+draw();
+</script>
+
+</body>
+</html>
