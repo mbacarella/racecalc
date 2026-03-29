@@ -135,7 +135,18 @@
       min-width: 70px; text-align: center; flex-shrink: 0;
     }
 
-    .seg-slider-wrap { flex: 1; display: flex; align-items: center; gap: 0.6rem; min-width: 0; }
+    .seg-slider-wrap { flex: 1; display: flex; align-items: center; gap: 0.4rem; min-width: 0; }
+
+    .seg-nudge {
+      width: 44px; height: 44px; min-width: 44px; border-radius: 50%;
+      font-size: 1.4rem; font-weight: 700; display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0; padding: 0;
+      background: var(--bg); border: 1px solid var(--border); color: var(--text);
+      cursor: pointer; transition: all 0.15s; line-height: 1;
+    }
+
+    .seg-nudge:hover { border-color: var(--accent); background: rgba(99, 102, 241, 0.1); }
+    .seg-nudge:active { background: rgba(99, 102, 241, 0.2); transform: scale(0.95); }
 
     .seg-slider {
       -webkit-appearance: none; appearance: none; flex: 1; height: 8px;
@@ -695,10 +706,10 @@ function renderSegmentEditor() {
       </div>
       <div class="seg-pace">${formatPace(pace)}<span style="font-size:0.7rem;font-weight:400;color:var(--text-muted)">/${unit}</span></div>
       <div class="seg-slider-wrap">
-        <span style="font-size:0.8rem;color:var(--text-muted)">−</span>
+        <button class="seg-nudge" onclick="event.stopPropagation();nudgePace(${i}, -1)" title="1 sec faster">−</button>
         <input type="range" class="seg-slider" min="${minPace}" max="${maxPace}" step="0.01" value="${pace}"
           oninput="adjustSegmentPace(${i}, parseFloat(this.value))">
-        <span style="font-size:0.8rem;color:var(--text-muted)">+</span>
+        <button class="seg-nudge" onclick="event.stopPropagation();nudgePace(${i}, 1)" title="1 sec slower">+</button>
       </div>
       <div class="seg-actions">
         ${splitting ? `
@@ -722,6 +733,15 @@ function selectSegment(i) {
   selectedSegment = i;
   draw();
   renderSegmentEditor();
+}
+
+function nudgePace(i, seconds) {
+  const currentPace = getSegmentPace(i);
+  const newPace = currentPace + seconds / 60;
+  const basePace = getBasePace();
+  const clamped = Math.max(basePace * PACE_MIN_MULT, Math.min(basePace * PACE_MAX_MULT, newPace));
+  setSegmentPace(i, clamped);
+  refresh();
 }
 
 function adjustSegmentPace(i, pace) {
