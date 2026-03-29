@@ -27,9 +27,20 @@
       padding: 2rem;
     }
 
-    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.25rem; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin: 0; }
 
-    .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; }
+    .top-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .unit-btn {
+      background: var(--surface); border: 1px solid var(--border); color: var(--text);
+      padding: 0.45rem 1rem; border-radius: 8px; font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.08em; cursor: pointer; transition: all 0.2s;
+    }
+
+    .unit-btn:hover { border-color: var(--accent); background: rgba(99, 102, 241, 0.1); }
 
     .controls {
       display: flex;
@@ -88,12 +99,6 @@
     button:hover { border-color: var(--accent); background: rgba(99, 102, 241, 0.1); }
     button.danger:hover { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
 
-    .unit-toggle {
-      display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
-    }
-
-    .unit-toggle button { border: none; border-radius: 0; padding: 0.6rem 1rem; font-size: 0.85rem; }
-    .unit-toggle button.active { background: var(--accent); color: white; }
 
     .section-instructions {
       color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem;
@@ -123,8 +128,6 @@
     }
 
     .analysis-value.accent { color: var(--accent); }
-    .analysis-value.green { color: var(--green); }
-    .analysis-value.orange { color: var(--orange); }
 
     /* Segment editor */
     .segments { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
@@ -250,8 +253,10 @@
 </head>
 <body>
 
-<h1>Race Calculator</h1>
-<p class="subtitle">Build a pacing strategy and see your projected splits</p>
+<div class="top-bar">
+  <h1>Race Calculator</h1>
+  <button class="unit-btn" id="unitBtn" onclick="toggleUnit()">MILES</button>
+</div>
 
 <div class="controls">
   <div class="field">
@@ -269,22 +274,15 @@
     </select>
   </div>
   <div class="field">
-    <label>Base Pace (min/mi)</label>
+    <label id="basePaceLabel">Base Pace (min/mi)</label>
     <input type="text" id="basePace" value="8:30" placeholder="M:SS" inputmode="numeric">
-  </div>
-  <div class="field">
-    <label>Units</label>
-    <div class="unit-toggle">
-      <button data-unit="km" onclick="setUnit('km')">km</button>
-      <button class="active" data-unit="mi" onclick="setUnit('mi')">mi</button>
-    </div>
   </div>
 </div>
 
 <p class="section-instructions">Use the sliders to set your pace for each segment. Split a segment to vary your effort across the race.</p>
 
 <div class="point-controls" style="margin-bottom: 1rem;">
-  <button onclick="resetPoints()">Reset to flat</button>
+  <button onclick="resetPoints()">Reset</button>
   <button onclick="presetNegativeSplit()">Negative split</button>
   <button onclick="presetPositiveSplit()">Positive split</button>
   <button onclick="presetFadeFinish()">Late fade</button>
@@ -300,12 +298,8 @@
       <span class="analysis-value accent" id="finishTime">--:--:--</span>
     </div>
     <div class="analysis-stat">
-      <span class="analysis-label">Avg Pace</span>
-      <span class="analysis-value green" id="avgPace">--:--</span>
-    </div>
-    <div class="analysis-stat">
-      <span class="analysis-label">Avg Speed</span>
-      <span class="analysis-value orange" id="avgSpeed">-- mph</span>
+      <span class="analysis-label">Avg</span>
+      <span class="analysis-value" id="avgCombo">--:-- / -- mph</span>
     </div>
   </div>
 </div>
@@ -387,18 +381,15 @@ function getDisplayDistance() {
   return unit === 'mi' ? km * KM_TO_MI : km;
 }
 
-function setUnit(u) {
+function toggleUnit() {
   const oldUnit = unit;
-  unit = u;
-  document.querySelectorAll('.unit-toggle button').forEach(b => {
-    b.classList.toggle('active', b.dataset.unit === u);
-  });
-  const label = basePaceInput.parentElement.querySelector('label');
-  label.textContent = unit === 'mi' ? 'Base Pace (min/mi)' : 'Base Pace (min/km)';
+  unit = oldUnit === 'mi' ? 'km' : 'mi';
+  document.getElementById('unitBtn').textContent = unit === 'mi' ? 'MILES' : 'KM';
+  document.getElementById('basePaceLabel').textContent = unit === 'mi' ? 'Base Pace (min/mi)' : 'Base Pace (min/km)';
   const currentPace = parsePace(basePaceInput.value);
-  if (oldUnit === 'km' && u === 'mi') {
+  if (oldUnit === 'km' && unit === 'mi') {
     basePaceInput.value = decimalToMSS(currentPace / KM_TO_MI);
-  } else if (oldUnit === 'mi' && u === 'km') {
+  } else if (oldUnit === 'mi' && unit === 'km') {
     basePaceInput.value = decimalToMSS(currentPace * KM_TO_MI);
   }
   refresh();
@@ -470,8 +461,9 @@ function recalc() {
   const avgSpeedDisplay = unit === 'mi' ? avgSpeedKmh * KM_TO_MI : avgSpeedKmh;
 
   document.getElementById('finishTime').textContent = formatTime(totalMinutes);
-  document.getElementById('avgPace').textContent = formatPace(avgPacePerUnit) + '/' + (unit === 'mi' ? 'mi' : 'km');
-  document.getElementById('avgSpeed').textContent = avgSpeedDisplay.toFixed(1) + (unit === 'mi' ? ' mph' : ' km/h');
+  const paceStr = formatPace(avgPacePerUnit) + '/' + (unit === 'mi' ? 'mi' : 'km');
+  const speedStr = avgSpeedDisplay.toFixed(1) + (unit === 'mi' ? ' mph' : ' km/h');
+  document.getElementById('avgCombo').textContent = paceStr + '  /  ' + speedStr;
 
   renderSplits(distKm, basePace);
 }
