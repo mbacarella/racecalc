@@ -27,17 +27,9 @@
       padding: 2rem;
     }
 
-    h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-    }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.25rem; }
 
-    .subtitle {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 2rem;
-    }
+    .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; }
 
     .controls {
       display: flex;
@@ -47,29 +39,17 @@
       margin-bottom: 1.5rem;
     }
 
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
+    .field { display: flex; flex-direction: column; gap: 0.35rem; }
 
     .field label {
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
+      font-size: 0.8rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--text-muted);
     }
 
     select, input {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 0.6rem 0.9rem;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s;
+      background: var(--surface); border: 1px solid var(--border); color: var(--text);
+      padding: 0.6rem 0.9rem; border-radius: 8px; font-size: 0.95rem;
+      outline: none; transition: border-color 0.2s;
     }
 
     select:focus, input:focus {
@@ -80,169 +60,174 @@
     select { cursor: pointer; min-width: 180px; }
     input[type="text"]#basePace { width: 100px; font-variant-numeric: tabular-nums; }
 
-    .splits-table {
-      margin-top: 1.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .splits-table table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .splits-table th {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      text-align: left;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .splits-table td {
-      padding: 0.55rem 1rem;
-      font-size: 0.9rem;
-      font-variant-numeric: tabular-nums;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-    }
-
-    .splits-table tr:last-child td { border-bottom: none; }
-
-    .splits-table tr:hover td { background: rgba(255,255,255,0.02); }
-
-    .splits-table .split-fast { color: var(--green); }
-    .splits-table .split-slow { color: #ef4444; }
-
-    .results {
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 1.5rem;
-    }
+    .results { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
 
     .stat {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1rem 1.5rem;
-      min-width: 160px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1rem 1.5rem; min-width: 160px;
     }
 
     .stat .label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      margin-bottom: 0.25rem;
+      font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.25rem;
     }
 
-    .stat .value {
-      font-size: 1.6rem;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-    }
-
+    .stat .value { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
     .stat .value.accent { color: var(--accent); }
     .stat .value.green { color: var(--green); }
     .stat .value.orange { color: var(--orange); }
 
     .graph-container {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      position: relative;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem; position: relative;
     }
 
     .graph-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
       margin-bottom: 1rem;
     }
 
-    .graph-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-    }
+    .graph-title { font-size: 0.95rem; font-weight: 600; }
+    .graph-hint { font-size: 0.8rem; color: var(--text-muted); }
 
-    .graph-hint {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
+    canvas { display: block; width: 100%; border-radius: 8px; }
 
-    canvas {
-      display: block;
-      width: 100%;
-      border-radius: 8px;
-      cursor: crosshair;
-    }
-
-    .point-controls {
-      display: flex;
-      gap: 0.75rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-    }
+    .point-controls { display: flex; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap; }
 
     button {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.2s;
+      background: var(--surface); border: 1px solid var(--border); color: var(--text);
+      padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem;
+      cursor: pointer; transition: all 0.2s;
     }
 
-    button:hover {
-      border-color: var(--accent);
-      background: rgba(99, 102, 241, 0.1);
-    }
-
-    button.danger:hover {
-      border-color: #ef4444;
-      background: rgba(239, 68, 68, 0.1);
-    }
+    button:hover { border-color: var(--accent); background: rgba(99, 102, 241, 0.1); }
+    button.danger:hover { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
 
     .unit-toggle {
-      display: flex;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
+      display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
     }
 
-    .unit-toggle button {
-      border: none;
-      border-radius: 0;
-      padding: 0.6rem 1rem;
-      font-size: 0.85rem;
+    .unit-toggle button { border: none; border-radius: 0; padding: 0.6rem 1rem; font-size: 0.85rem; }
+    .unit-toggle button.active { background: var(--accent); color: white; }
+
+    .section-instructions {
+      color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem;
     }
 
-    .unit-toggle button.active {
-      background: var(--accent);
-      color: white;
+    .section-heading {
+      font-size: 1.3rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem;
+      padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
     }
+
+    /* Segment editor */
+    .segments { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .segment-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.85rem 1rem; display: flex;
+      align-items: center; gap: 1rem; transition: border-color 0.2s;
+    }
+
+    .segment-card.selected { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-glow); }
+
+
+    .seg-pace {
+      font-size: 1.1rem; font-weight: 700; font-variant-numeric: tabular-nums;
+      min-width: 60px; text-align: center; flex-shrink: 0;
+    }
+
+    .seg-slider-wrap { flex: 1; display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
+
+    .seg-slider {
+      -webkit-appearance: none; appearance: none; flex: 1; height: 6px;
+      background: var(--border); border-radius: 3px; outline: none; cursor: pointer;
+    }
+
+    .seg-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 20px; height: 20px;
+      border-radius: 50%; background: var(--accent); cursor: grab; border: 2px solid white;
+    }
+
+    .seg-slider::-moz-range-thumb {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--accent); cursor: grab; border: 2px solid white;
+    }
+
+    .seg-btn {
+      padding: 0.3rem 0.5rem; font-size: 0.8rem; min-width: unset; flex-shrink: 0;
+    }
+
+    .seg-btn.remove { color: #ef4444; }
+    .seg-btn.remove:hover { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+
+    .seg-actions { display: flex; gap: 0.35rem; flex-shrink: 0; align-items: center; }
+
+    .split-input {
+      width: 55px; padding: 0.25rem 0.4rem; font-size: 0.85rem;
+      font-variant-numeric: tabular-nums; text-align: center;
+    }
+
+    .seg-bounds {
+      display: flex; align-items: center; gap: 0.2rem;
+      min-width: 105px; flex-shrink: 0;
+    }
+
+    .bound-input {
+      width: 42px; padding: 0.2rem 0.3rem; font-size: 0.8rem;
+      font-variant-numeric: tabular-nums; text-align: center;
+      background: var(--bg); border: 1px solid var(--border); color: var(--text);
+      border-radius: 4px;
+    }
+
+    .bound-input:focus { border-color: var(--accent); }
+
+    .bound-fixed {
+      font-size: 0.8rem; color: var(--text-muted); font-variant-numeric: tabular-nums;
+      width: 42px; text-align: center; display: inline-block;
+    }
+
+    .bound-dash { color: var(--text-muted); font-size: 0.8rem; }
+    .bound-unit { color: var(--text-muted); font-size: 0.75rem; margin-left: 0.1rem; }
+
+
+    /* Splits table */
+    .splits-table {
+      margin-top: 1.5rem; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    }
+
+    .splits-table table { width: 100%; border-collapse: collapse; }
+
+    .splits-table th {
+      font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--text-muted); text-align: left;
+      padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);
+    }
+
+    .splits-table td {
+      padding: 0.55rem 1rem; font-size: 0.9rem; font-variant-numeric: tabular-nums;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .splits-table tr:last-child td { border-bottom: none; }
+    .splits-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .splits-table .split-fast { color: var(--green); }
+    .splits-table .split-slow { color: #ef4444; }
 
     @media (max-width: 600px) {
       body { padding: 1rem; }
       h1 { font-size: 1.4rem; }
       .stat { min-width: 120px; padding: 0.75rem 1rem; }
       .stat .value { font-size: 1.3rem; }
+      .segment-card { flex-wrap: wrap; gap: 0.5rem; }
+      .seg-slider-wrap { min-width: 100%; order: 10; }
     }
   </style>
 </head>
 <body>
 
 <h1>Race Calculator</h1>
-<p class="subtitle">Drag points on the graph to model your pacing strategy</p>
+<p class="subtitle">Build a pacing strategy and see your projected splits</p>
 
 <div class="controls">
   <div class="field">
@@ -272,6 +257,19 @@
   </div>
 </div>
 
+<p class="section-instructions">Use the sliders to set your pace for each segment. Split a segment to vary your effort across the race.</p>
+
+<div class="point-controls" style="margin-bottom: 1rem;">
+  <button onclick="resetPoints()">Reset to flat</button>
+  <button onclick="presetNegativeSplit()">Negative split</button>
+  <button onclick="presetPositiveSplit()">Positive split</button>
+  <button onclick="presetFadeFinish()">Late fade</button>
+</div>
+
+<div class="segments" id="segmentEditor"></div>
+
+<h2 class="section-heading">Analysis</h2>
+
 <div class="results">
   <div class="stat">
     <div class="label">Estimated Finish</div>
@@ -283,27 +281,19 @@
   </div>
   <div class="stat">
     <div class="label">Avg Speed</div>
-    <div class="value orange" id="avgSpeed">-- km/h</div>
+    <div class="value orange" id="avgSpeed">-- mph</div>
   </div>
   <div class="stat">
     <div class="label">Distance</div>
-    <div class="value" id="distDisplay">21.1 km</div>
+    <div class="value" id="distDisplay">13.1 mi</div>
   </div>
 </div>
 
 <div class="graph-container">
   <div class="graph-header">
     <span class="graph-title">Pacing Profile</span>
-    <span class="graph-hint">Drag steps up/down &middot; Double-click/tap to split &middot; Right-click/long-press to remove</span>
   </div>
   <canvas id="graph"></canvas>
-  <div class="point-controls">
-    <button onclick="resetPoints()">Reset to flat</button>
-    <button onclick="presetNegativeSplit()">Negative split</button>
-    <button onclick="presetPositiveSplit()">Positive split</button>
-    <button onclick="presetFadeFinish()">Late fade</button>
-    <button class="danger" onclick="clearMiddlePoints()">Clear points</button>
-  </div>
 </div>
 
 <div class="splits-table" id="splitsContainer">
@@ -333,17 +323,15 @@ let dpr = window.devicePixelRatio || 1;
 const PACE_MIN_MULT = 0.7;
 const PACE_MAX_MULT = 1.5;
 
-// Points are stored as { x: 0-1 (fraction of race), y: 0-1 (pace multiplier mapped) }
-// y=0 means fastest (base * 0.7), y=1 means slowest (base * 1.5)
+// Each point marks the start of a flat segment. y is in [0,1] mapped to multiplier range.
 let points = [
   { x: 0, y: (1.0 - PACE_MIN_MULT) / (PACE_MAX_MULT - PACE_MIN_MULT) },
 ];
 
-const GRAPH_PADDING = { top: 30, right: 20, bottom: 45, left: 55 };
-const POINT_RADIUS = 7;
+let selectedSegment = 0;
 
-let dragging = null;
-let hovered = null;
+const GRAPH_PADDING = { top: 30, right: 20, bottom: 45, left: 70 };
+const POINT_RADIUS = 5;
 
 function yToPaceMultiplier(y) {
   return PACE_MIN_MULT + y * (PACE_MAX_MULT - PACE_MIN_MULT);
@@ -353,9 +341,7 @@ function paceMultiplierToY(m) {
   return (m - PACE_MIN_MULT) / (PACE_MAX_MULT - PACE_MIN_MULT);
 }
 
-function getDistance() {
-  return parseFloat(distSelect.value);
-}
+function getDistance() { return parseFloat(distSelect.value); }
 
 function parsePace(str) {
   str = str.trim();
@@ -373,9 +359,7 @@ function decimalToMSS(dec) {
   return `${m}:${String(s).padStart(2, '0')}`;
 }
 
-function getBasePace() {
-  return parsePace(basePaceInput.value) || 8.5;
-}
+function getBasePace() { return parsePace(basePaceInput.value) || 8.5; }
 
 function getDisplayDistance() {
   const km = getDistance();
@@ -390,44 +374,33 @@ function setUnit(u) {
   });
   const label = basePaceInput.parentElement.querySelector('label');
   label.textContent = unit === 'mi' ? 'Base Pace (min/mi)' : 'Base Pace (min/km)';
-  // Convert displayed pace between units
   const currentPace = parsePace(basePaceInput.value);
   if (oldUnit === 'km' && u === 'mi') {
     basePaceInput.value = decimalToMSS(currentPace / KM_TO_MI);
   } else if (oldUnit === 'mi' && u === 'km') {
     basePaceInput.value = decimalToMSS(currentPace * KM_TO_MI);
   }
-  recalc();
-  draw();
+  refresh();
 }
 
-function sortPoints() {
-  points.sort((a, b) => a.x - b.x);
-}
+function sortPoints() { points.sort((a, b) => a.x - b.x); }
 
 function getGraphArea() {
   const rect = canvas.getBoundingClientRect();
   return {
-    x: GRAPH_PADDING.left,
-    y: GRAPH_PADDING.top,
+    x: GRAPH_PADDING.left, y: GRAPH_PADDING.top,
     w: rect.width * dpr - GRAPH_PADDING.left - GRAPH_PADDING.right,
     h: rect.height * dpr - GRAPH_PADDING.top - GRAPH_PADDING.bottom,
   };
 }
 
-// Compute visible Y range based on current points, auto-zoomed with padding
 function getViewRange() {
   let minY = Infinity, maxY = -Infinity;
   const baseY = paceMultiplierToY(1.0);
-  for (const p of points) {
-    minY = Math.min(minY, p.y);
-    maxY = Math.max(maxY, p.y);
-  }
-  // Always include base pace in the view
+  for (const p of points) { minY = Math.min(minY, p.y); maxY = Math.max(maxY, p.y); }
   minY = Math.min(minY, baseY);
   maxY = Math.max(maxY, baseY);
 
-  // Ensure a minimum visible range (~±1 min/unit around base)
   const basePace = getBasePace();
   const oneMinRange = 1.0 / basePace / (PACE_MAX_MULT - PACE_MIN_MULT);
   const minSpan = Math.max(0.25, oneMinRange * 2);
@@ -440,57 +413,33 @@ function getViewRange() {
     span = minSpan;
   }
 
-  // Add padding (30% of span on each side)
   const pad = span * 0.3;
   minY -= pad;
   maxY += pad;
-
-  // Clamp to valid range
   minY = Math.max(0, minY);
   maxY = Math.min(1, maxY);
-
   return { minY, maxY };
 }
 
-function pointToCanvas(p) {
-  const area = getGraphArea();
-  const { minY, maxY } = getViewRange();
-  return {
-    cx: area.x + p.x * area.w,
-    cy: area.y + ((p.y - minY) / (maxY - minY)) * area.h,
-  };
-}
-
-function canvasToPoint(cx, cy) {
-  const area = getGraphArea();
-  const { minY, maxY } = getViewRange();
-  return {
-    x: Math.max(0, Math.min(1, (cx - area.x) / area.w)),
-    y: Math.max(0, Math.min(1, minY + ((cy - area.y) / area.h) * (maxY - minY))),
-  };
-}
-
 function interpolatePace(fraction) {
-  // Step function: each segment uses its left point's y value
   for (let i = points.length - 1; i >= 0; i--) {
-    if (fraction >= points[i].x) {
-      return yToPaceMultiplier(points[i].y);
-    }
+    if (fraction >= points[i].x) return yToPaceMultiplier(points[i].y);
   }
   return yToPaceMultiplier(points[0].y);
 }
 
+// --- Calculations ---
+
 function recalc() {
   const distKm = getDistance();
-  const basePace = getBasePace(); // min per unit
+  const basePace = getBasePace();
   const steps = 500;
   let totalMinutes = 0;
 
   for (let i = 0; i < steps; i++) {
     const frac = (i + 0.5) / steps;
     const mult = interpolatePace(frac);
-    const segmentDist = distKm / steps; // in km
-    // basePace is in min/unit, we need to convert segment to the same unit
+    const segmentDist = distKm / steps;
     const segmentInUnit = unit === 'mi' ? segmentDist * KM_TO_MI : segmentDist;
     totalMinutes += segmentInUnit * basePace * mult;
   }
@@ -512,7 +461,7 @@ function recalc() {
 
 function renderSplits(distKm, basePace) {
   const tbody = document.getElementById('splitsBody');
-  const splitUnitKm = unit === 'mi' ? 1 / KM_TO_MI : 1; // 1 mi or 1 km in km
+  const splitUnitKm = unit === 'mi' ? 1 / KM_TO_MI : 1;
   const totalSplits = Math.ceil(distKm / splitUnitKm);
   const steps = 200;
   let elapsed = 0;
@@ -535,8 +484,8 @@ function renderSplits(distKm, basePace) {
     const splitDist = unit === 'mi' ? segKm * KM_TO_MI : segKm;
     const splitPace = splitTime / splitDist;
     const isLast = endKm >= distKm - 0.001;
-    const splitLabel = isLast && splitDist < (unit === 'mi' ? 0.99 : 0.99)
-      ? `${(s * (unit === 'mi' ? 1 : 1) + splitDist).toFixed(2)} ${unit}`
+    const splitLabel = isLast && splitDist < 0.99
+      ? `${(s + splitDist).toFixed(2)} ${unit}`
       : `${s + 1}`;
     const paceClass = splitPace < basePace * 0.97 ? 'split-fast' : splitPace > basePace * 1.03 ? 'split-slow' : '';
 
@@ -566,6 +515,8 @@ function formatPace(minPerUnit) {
   return `${m}:${String(s).padStart(2, '0')}`;
 }
 
+// --- Drawing ---
+
 function resizeCanvas() {
   const rect = canvas.getBoundingClientRect();
   dpr = window.devicePixelRatio || 1;
@@ -579,15 +530,20 @@ function draw() {
   const h = canvas.height;
   const area = getGraphArea();
   const basePace = getBasePace();
+  const view = getViewRange();
+  const dispDist = getDisplayDistance();
 
   ctx.clearRect(0, 0, w, h);
 
-  // Grid lines
+  // Grid
   ctx.strokeStyle = 'rgba(255,255,255,0.06)';
   ctx.lineWidth = 1;
 
-  // Pace grid at :00 and :30 intervals, within the visible view range
-  const view = getViewRange();
+  function mapY(py) {
+    return area.y + ((py - view.minY) / (view.maxY - view.minY)) * area.h;
+  }
+
+  // Pace grid
   const viewMinPace = basePace * yToPaceMultiplier(view.minY);
   const viewMaxPace = basePace * yToPaceMultiplier(view.maxY);
   const firstTick = Math.ceil(viewMinPace * 2) / 2;
@@ -595,48 +551,30 @@ function draw() {
   for (let pace = firstTick; pace <= lastTick; pace += 0.5) {
     const mult = pace / basePace;
     const yFrac = paceMultiplierToY(mult);
-    const viewY = (yFrac - view.minY) / (view.maxY - view.minY);
-    const y = area.y + viewY * area.h;
+    const y = mapY(yFrac);
     if (y < area.y - 1 || y > area.y + area.h + 1) continue;
-    ctx.beginPath();
-    ctx.moveTo(area.x, y);
-    ctx.lineTo(area.x + area.w, y);
-    ctx.stroke();
-
+    ctx.beginPath(); ctx.moveTo(area.x, y); ctx.lineTo(area.x + area.w, y); ctx.stroke();
     ctx.fillStyle = 'rgba(255,255,255,0.35)';
     ctx.font = `${11 * dpr}px -apple-system, system-ui, sans-serif`;
-    ctx.textAlign = 'right';
-    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
     ctx.fillText(formatPace(pace), area.x - 8, y);
   }
 
-  // Distance labels
-  const distKm = getDistance();
-  // Distance grid at whole and half mile/km marks
-  const dispDist = getDisplayDistance();
-  // Choose tick interval: 0.5 for short races, 1 for medium, 2/5 for ultras
+  // Distance grid
   let distTick = 0.5;
   if (dispDist > 20) distTick = 1;
   if (dispDist > 40) distTick = 2;
   if (dispDist > 80) distTick = 5;
-
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'top';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
   for (let d = 0; d <= dispDist; d += distTick) {
     const frac = d / dispDist;
     const x = area.x + frac * area.w;
     const isWhole = Math.abs(d - Math.round(d)) < 0.01;
     ctx.strokeStyle = isWhole ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.04)';
-    ctx.beginPath();
-    ctx.moveTo(x, area.y);
-    ctx.lineTo(x, area.y + area.h);
-    ctx.stroke();
-
-    // Only label whole numbers (and halves for short races)
+    ctx.beginPath(); ctx.moveTo(x, area.y); ctx.lineTo(x, area.y + area.h); ctx.stroke();
     if (isWhole || (distTick === 0.5 && dispDist <= 10)) {
       ctx.fillStyle = 'rgba(255,255,255,0.35)';
-      const label = isWhole ? Math.round(d).toString() : d.toFixed(1);
-      ctx.fillText(label, x, area.y + area.h + 8);
+      ctx.fillText(isWhole ? Math.round(d).toString() : d.toFixed(1), x, area.y + area.h + 8);
     }
   }
 
@@ -645,374 +583,233 @@ function draw() {
   ctx.font = `${10 * dpr}px -apple-system, system-ui, sans-serif`;
   ctx.textAlign = 'center';
   ctx.fillText('Distance', area.x + area.w / 2, area.y + area.h + 28);
-
   ctx.save();
   ctx.translate(14, area.y + area.h / 2);
   ctx.rotate(-Math.PI / 2);
   ctx.fillText('Pace (min/' + unit + ')', 0, 0);
   ctx.restore();
 
-  // Staircase fill and stroke
-  const gradient = ctx.createLinearGradient(0, area.y, 0, area.y + area.h);
-  gradient.addColorStop(0, 'rgba(99, 102, 241, 0.25)');
-  gradient.addColorStop(1, 'rgba(99, 102, 241, 0.02)');
-
-  // Map a point's y value to canvas y using the view range
-  function viewY(py) {
-    return area.y + ((py - view.minY) / (view.maxY - view.minY)) * area.h;
-  }
-
-  // Build staircase path
-  function buildStairPath() {
-    ctx.moveTo(area.x, area.y + area.h);
-    for (let i = 0; i < points.length; i++) {
-      const nextX = i < points.length - 1 ? points[i + 1].x : 1;
-      const sy = viewY(points[i].y);
-      const sx1 = area.x + points[i].x * area.w;
-      const sx2 = area.x + nextX * area.w;
-      ctx.lineTo(sx1, sy);
-      ctx.lineTo(sx2, sy);
-    }
-    ctx.lineTo(area.x + area.w, area.y + area.h);
-  }
-
-  ctx.beginPath();
-  buildStairPath();
-  ctx.closePath();
-  ctx.fillStyle = gradient;
-  ctx.fill();
-
-  ctx.beginPath();
-  // Stroke just the top staircase (not the bottom closing line)
+  // Staircase segments
   for (let i = 0; i < points.length; i++) {
     const nextX = i < points.length - 1 ? points[i + 1].x : 1;
-    const sy = viewY(points[i].y);
+    const sy = mapY(points[i].y);
     const sx1 = area.x + points[i].x * area.w;
     const sx2 = area.x + nextX * area.w;
-    if (i === 0) ctx.moveTo(sx1, sy);
-    else ctx.lineTo(sx1, sy);
-    ctx.lineTo(sx2, sy);
-  }
-  ctx.strokeStyle = '#6366f1';
-  ctx.lineWidth = 2.5 * dpr;
-  ctx.stroke();
+    const isSelected = i === selectedSegment;
 
-  // Base pace reference line
-  const baseYFrac = (paceMultiplierToY(1.0) - view.minY) / (view.maxY - view.minY);
-  const baseY = area.y + baseYFrac * area.h;
-  ctx.setLineDash([4 * dpr, 4 * dpr]);
-  ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(area.x, baseY);
-  ctx.lineTo(area.x + area.w, baseY);
-  ctx.stroke();
-  ctx.setLineDash([]);
+    // Fill
+    const grad = ctx.createLinearGradient(0, sy, 0, area.y + area.h);
+    if (isSelected) {
+      grad.addColorStop(0, 'rgba(99, 102, 241, 0.35)');
+      grad.addColorStop(1, 'rgba(99, 102, 241, 0.05)');
+    } else {
+      grad.addColorStop(0, 'rgba(99, 102, 241, 0.15)');
+      grad.addColorStop(1, 'rgba(99, 102, 241, 0.02)');
+    }
+    ctx.fillStyle = grad;
+    ctx.fillRect(sx1, sy, sx2 - sx1, area.y + area.h - sy);
 
-  // Points (drawn at the left edge of each step)
-  points.forEach((p, i) => {
-    const { cx, cy } = pointToCanvas(p);
-    const isHovered = hovered === i;
-    const isDragging = dragging === i;
-    const r = POINT_RADIUS * dpr * (isHovered || isDragging ? 1.3 : 1);
-
-    // Glow
-    ctx.beginPath();
-    ctx.arc(cx, cy, r + 4 * dpr, 0, Math.PI * 2);
-    ctx.fillStyle = isDragging ? 'rgba(99, 102, 241, 0.4)' : 'rgba(99, 102, 241, 0.15)';
-    ctx.fill();
-
-    // Point
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.fillStyle = (i === 0 || i === points.length - 1) ? '#4f46e5' : '#6366f1';
-    ctx.fill();
-    ctx.strokeStyle = '#fff';
-    ctx.lineWidth = 2 * dpr;
+    // Stroke top
+    ctx.beginPath(); ctx.moveTo(sx1, sy); ctx.lineTo(sx2, sy);
+    ctx.strokeStyle = isSelected ? '#818cf8' : '#6366f1';
+    ctx.lineWidth = (isSelected ? 3 : 2) * dpr;
     ctx.stroke();
 
-    // Vertical transition lines at split points (except first)
+    // Vertical transition
     if (i > 0) {
-      const prevY = viewY(points[i - 1].y);
-      ctx.beginPath();
-      ctx.moveTo(cx, prevY);
-      ctx.lineTo(cx, cy);
+      const prevSy = mapY(points[i - 1].y);
+      ctx.beginPath(); ctx.moveTo(sx1, prevSy); ctx.lineTo(sx1, sy);
       ctx.strokeStyle = 'rgba(99, 102, 241, 0.4)';
       ctx.lineWidth = 1.5 * dpr;
       ctx.setLineDash([3 * dpr, 3 * dpr]);
-      ctx.stroke();
-      ctx.setLineDash([]);
+      ctx.stroke(); ctx.setLineDash([]);
     }
 
-    // Tooltip on hover/drag
-    if (isHovered || isDragging) {
-      const mult = yToPaceMultiplier(p.y);
-      const pace = basePace * mult;
-      const nextX = i < points.length - 1 ? points[i + 1].x : 1;
-      const startDist = (p.x * dispDist).toFixed(1);
-      const endDist = (nextX * dispDist).toFixed(1);
-      const label = `${startDist}–${endDist} ${unit} @ ${formatPace(pace)}/${unit}`;
-
-      ctx.font = `bold ${11 * dpr}px -apple-system, system-ui, sans-serif`;
-      const tw = ctx.measureText(label).width;
-      const midX = area.x + ((p.x + nextX) / 2) * area.w;
-      const tx = Math.max(area.x, Math.min(midX - tw / 2 - 8, area.x + area.w - tw - 16));
-      const ty = cy - 32 * dpr;
-
-      ctx.fillStyle = 'rgba(0,0,0,0.85)';
-      ctx.beginPath();
-      ctx.roundRect(tx, ty, tw + 16, 22 * dpr, 6);
-      ctx.fill();
-
-      ctx.fillStyle = '#fff';
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(label, tx + 8, ty + 11 * dpr);
-    }
-  });
-}
-
-// --- Interaction ---
-// dragMode: 'point' = dragging a point handle (can move x+y), 'segment' = dragging a flat segment (y only)
-let dragMode = null;
-
-function getMousePos(e) {
-  const rect = canvas.getBoundingClientRect();
-  return {
-    x: (e.clientX - rect.left) * dpr,
-    y: (e.clientY - rect.top) * dpr,
-  };
-}
-
-function findPoint(mx, my) {
-  const hitRadius = POINT_RADIUS * dpr * 2;
-  for (let i = points.length - 1; i >= 0; i--) {
-    const { cx, cy } = pointToCanvas(points[i]);
-    const dist = Math.hypot(mx - cx, my - cy);
-    if (dist < hitRadius) return i;
+    // Point handle
+    const r = POINT_RADIUS * dpr * (isSelected ? 1.3 : 1);
+    ctx.beginPath(); ctx.arc(sx1, sy, r, 0, Math.PI * 2);
+    ctx.fillStyle = isSelected ? '#818cf8' : '#4f46e5';
+    ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2 * dpr; ctx.stroke();
   }
-  return -1;
+
+  // Base pace reference line
+  const baseYPos = mapY(paceMultiplierToY(1.0));
+  ctx.setLineDash([4 * dpr, 4 * dpr]);
+  ctx.strokeStyle = 'rgba(255,255,255,0.15)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(area.x, baseYPos); ctx.lineTo(area.x + area.w, baseYPos); ctx.stroke();
+  ctx.setLineDash([]);
 }
 
-// Find which segment (index of left point) the mouse is over
-function findSegment(mx, my) {
-  const area = getGraphArea();
-  const view = getViewRange();
-  const p = canvasToPoint(mx, my);
-  const hitY = 12 * dpr; // vertical tolerance from the step line
+
+// --- Segment editor ---
+
+function getSegmentPace(i) {
+  return getBasePace() * yToPaceMultiplier(points[i].y);
+}
+
+function setSegmentPace(i, pace) {
+  const mult = pace / getBasePace();
+  points[i].y = Math.max(0, Math.min(1, paceMultiplierToY(mult)));
+}
+
+function renderSegmentEditor() {
+  const editor = document.getElementById('segmentEditor');
+  const basePace = getBasePace();
+  const dispDist = getDisplayDistance();
+  let html = '';
+
   for (let i = 0; i < points.length; i++) {
     const nextX = i < points.length - 1 ? points[i + 1].x : 1;
-    if (p.x >= points[i].x && p.x <= nextX) {
-      const lineY = area.y + ((points[i].y - view.minY) / (view.maxY - view.minY)) * area.h;
-      if (Math.abs(my - lineY) < hitY) return i;
-      return -1; // right segment but too far from line
-    }
+    const startD = (points[i].x * dispDist).toFixed(1);
+    const endD = (nextX * dispDist).toFixed(1);
+    const pace = getSegmentPace(i);
+    const minPace = basePace * PACE_MIN_MULT;
+    const maxPace = basePace * PACE_MAX_MULT;
+    const isSelected = i === selectedSegment;
+
+    const midD = ((parseFloat(startD) + parseFloat(endD)) / 2).toFixed(1);
+    const splitting = (splitState === i);
+
+    const startEditable = i > 0;
+    const endEditable = i < points.length - 1;
+
+    html += `<div class="segment-card${isSelected ? ' selected' : ''}" onclick="selectSegment(${i})">
+      <div class="seg-bounds">
+        ${startEditable
+          ? `<input type="text" class="bound-input" value="${startD}" inputmode="decimal"
+              onclick="event.stopPropagation()" onchange="setBound(${i},'start',this.value)" title="Start">`
+          : `<span class="bound-fixed">${startD}</span>`}
+        <span class="bound-dash">&ndash;</span>
+        ${endEditable
+          ? `<input type="text" class="bound-input" value="${endD}" inputmode="decimal"
+              onclick="event.stopPropagation()" onchange="setBound(${i},'end',this.value)" title="End">`
+          : `<span class="bound-fixed">${endD}</span>`}
+        <span class="bound-unit">${unit}</span>
+      </div>
+      <div class="seg-pace">${formatPace(pace)}<span style="font-size:0.7rem;font-weight:400;color:var(--text-muted)">/${unit}</span></div>
+      <div class="seg-slider-wrap">
+        <span style="font-size:0.7rem;color:var(--text-muted)">fast</span>
+        <input type="range" class="seg-slider" min="${minPace}" max="${maxPace}" step="0.01" value="${pace}"
+          oninput="adjustSegmentPace(${i}, parseFloat(this.value))">
+        <span style="font-size:0.7rem;color:var(--text-muted)">slow</span>
+      </div>
+      <div class="seg-actions">
+        ${splitting ? `
+          <span style="font-size:0.8rem;color:var(--text-muted)">at ${unit}</span>
+          <input type="text" class="split-input" id="splitInput" value="${midD}" inputmode="decimal"
+            onclick="event.stopPropagation()" onkeydown="if(event.key==='Enter')confirmSplit(${i})">
+          <button class="seg-btn" onclick="event.stopPropagation();confirmSplit(${i})">OK</button>
+          <button class="seg-btn" onclick="event.stopPropagation();cancelSplit()">Cancel</button>
+        ` : `
+          <button class="seg-btn" onclick="event.stopPropagation();startSplit(${i})" title="Split">Split</button>
+          ${points.length > 1 && i > 0 ? `<button class="seg-btn remove" onclick="event.stopPropagation();removeSegment(${i})" title="Remove">&times;</button>` : ''}
+        `}
+      </div>
+    </div>`;
   }
-  return -1;
+
+  editor.innerHTML = html;
 }
 
-function handleDown(mx, my, isDoubleClick) {
-  const ptIdx = findPoint(mx, my);
-  if (ptIdx >= 0) {
-    dragging = ptIdx;
-    dragMode = 'point';
-    draw();
-    return;
-  }
-
-  const segIdx = findSegment(mx, my);
-  if (segIdx >= 0) {
-    if (isDoubleClick) {
-      // Double-click on segment: add a split point here
-      const p = canvasToPoint(mx, my);
-      const newPt = { x: p.x, y: points[segIdx].y };
-      points.push(newPt);
-      sortPoints();
-      dragging = points.indexOf(newPt);
-      dragMode = 'point';
-    } else {
-      // Single click drag on segment: adjust that segment's pace
-      dragging = segIdx;
-      dragMode = 'segment';
-    }
-    recalc();
-    draw();
-    return;
-  }
-
-  // Click in empty graph area: add a new split point
-  const p = canvasToPoint(mx, my);
-  if (p.x > 0.01 && p.x < 0.99) {
-    // Find which segment this falls in and use that segment's y
-    let segY = 0.5;
-    for (let i = points.length - 1; i >= 0; i--) {
-      if (p.x >= points[i].x) { segY = points[i].y; break; }
-    }
-    const newPt = { x: p.x, y: segY };
-    points.push(newPt);
-    sortPoints();
-    dragging = points.indexOf(newPt);
-    dragMode = 'point';
-    recalc();
-    draw();
-  }
-}
-
-function handleMove(mx, my) {
-  if (dragging !== null) {
-    const p = canvasToPoint(mx, my);
-    if (dragMode === 'segment') {
-      // Only adjust y (pace) for the segment
-      points[dragging].y = Math.max(0, Math.min(1, p.y));
-    } else {
-      // Point handle: first point locked to x=0
-      if (dragging === 0) {
-        points[dragging].y = Math.max(0, Math.min(1, p.y));
-      } else {
-        // Clamp x between neighbors
-        const prevX = points[dragging - 1].x + 0.005;
-        const nextX = dragging < points.length - 1 ? points[dragging + 1].x - 0.005 : 0.99;
-        points[dragging].x = Math.max(prevX, Math.min(nextX, p.x));
-        points[dragging].y = Math.max(0, Math.min(1, p.y));
-      }
-    }
-    recalc();
-    draw();
-  } else {
-    const ptIdx = findPoint(mx, my);
-    const segIdx = ptIdx < 0 ? findSegment(mx, my) : -1;
-    const newHover = ptIdx >= 0 ? ptIdx : (segIdx >= 0 ? segIdx : null);
-    if (newHover !== hovered) {
-      hovered = newHover;
-      canvas.style.cursor = ptIdx >= 0 ? 'grab' : segIdx >= 0 ? 'ns-resize' : 'crosshair';
-      draw();
-    }
-  }
-}
-
-canvas.addEventListener('mousedown', e => {
-  if (e.button === 2) return;
-  const { x, y } = getMousePos(e);
-  handleDown(x, y, false);
-});
-
-canvas.addEventListener('dblclick', e => {
-  const { x, y } = getMousePos(e);
-  // Reset any drag from the first click
-  dragging = null;
-  dragMode = null;
-  handleDown(x, y, true);
-});
-
-canvas.addEventListener('mousemove', e => {
-  const { x, y } = getMousePos(e);
-  handleMove(x, y);
-});
-
-canvas.addEventListener('mouseup', () => {
-  if (dragMode === 'point' && dragging !== null) {
-    canvas.style.cursor = 'grab';
-  }
-  dragging = null;
-  dragMode = null;
-});
-
-canvas.addEventListener('mouseleave', () => {
-  dragging = null;
-  dragMode = null;
-  hovered = null;
+function selectSegment(i) {
+  selectedSegment = i;
   draw();
-});
+  renderSegmentEditor();
+}
 
-canvas.addEventListener('contextmenu', e => {
-  e.preventDefault();
-  const { x, y } = getMousePos(e);
-  const idx = findPoint(x, y);
-  // Allow removing any point except the first (must keep at least one)
-  if (idx > 0) {
-    points.splice(idx, 1);
-    recalc();
-    draw();
+function adjustSegmentPace(i, pace) {
+  setSegmentPace(i, pace);
+  recalc();
+  draw();
+  // Update the pace display without full re-render (avoids losing slider focus)
+  const cards = document.querySelectorAll('.segment-card');
+  if (cards[i]) {
+    cards[i].querySelector('.seg-pace').innerHTML =
+      `${formatPace(pace)}<span style="font-size:0.7rem;font-weight:400;color:var(--text-muted)">/${unit}</span>`;
   }
-});
+}
 
-// Touch support
-// Tap an empty area to add a split point
-// Long-press a point to remove it
-let touchStart = null;
-let longPressTimer = null;
-let touchMoved = false;
+let splitState = null; // index of segment being split, or null
 
-canvas.addEventListener('touchstart', e => {
-  e.preventDefault();
-  const touch = e.touches[0];
-  const rect = canvas.getBoundingClientRect();
-  const mx = (touch.clientX - rect.left) * dpr;
-  const my = (touch.clientY - rect.top) * dpr;
-  touchMoved = false;
-  touchStart = { mx, my, time: Date.now() };
+function startSplit(i) {
+  splitState = i;
+  renderSegmentEditor();
+  // Auto-focus the input
+  setTimeout(() => {
+    const input = document.getElementById('splitInput');
+    if (input) { input.focus(); input.select(); }
+  }, 0);
+}
 
-  const ptIdx = findPoint(mx, my);
+function cancelSplit() {
+  splitState = null;
+  renderSegmentEditor();
+}
 
-  // Long-press on a point to remove it
-  clearTimeout(longPressTimer);
-  if (ptIdx > 0) {
-    longPressTimer = setTimeout(() => {
-      if (!touchMoved) {
-        points.splice(ptIdx, 1);
-        dragging = null;
-        dragMode = null;
-        recalc();
-        draw();
-        touchStart = null; // consumed
-      }
-    }, 500);
+function confirmSplit(i) {
+  const input = document.getElementById('splitInput');
+  if (!input) return;
+  const dispDist = getDisplayDistance();
+  const splitD = parseFloat(input.value);
+  const startD = points[i].x * dispDist;
+  const endD = (i < points.length - 1 ? points[i + 1].x : 1) * dispDist;
+
+  if (isNaN(splitD) || splitD <= startD + 0.05 || splitD >= endD - 0.05) {
+    // Invalid — flash the input
+    input.style.borderColor = '#ef4444';
+    setTimeout(() => { input.style.borderColor = ''; }, 500);
+    return;
   }
 
-  handleDown(mx, my, false);
-}, { passive: false });
+  const splitX = splitD / dispDist;
+  const newPt = { x: splitX, y: points[i].y };
+  points.splice(i + 1, 0, newPt);
+  selectedSegment = i + 1;
+  splitState = null;
+  refresh();
+}
 
-canvas.addEventListener('touchmove', e => {
-  e.preventDefault();
-  if (dragging === null) return;
-  const touch = e.touches[0];
-  const rect = canvas.getBoundingClientRect();
-  const mx = (touch.clientX - rect.left) * dpr;
-  const my = (touch.clientY - rect.top) * dpr;
-  if (touchStart && Math.hypot(mx - touchStart.mx, my - touchStart.my) > 5 * dpr) {
-    touchMoved = true;
-    clearTimeout(longPressTimer);
+function removeSegment(i) {
+  if (i === 0 || points.length <= 1) return;
+  points.splice(i, 1);
+  if (selectedSegment >= points.length) selectedSegment = points.length - 1;
+  refresh();
+}
+
+function setBound(i, side, value) {
+  const dispDist = getDisplayDistance();
+  const d = parseFloat(value);
+  if (isNaN(d)) { refresh(); return; }
+
+  const x = d / dispDist;
+
+  if (side === 'start' && i > 0) {
+    // Clamp between previous segment's start + tiny gap, and this segment's end - tiny gap
+    const prevStart = points[i - 1].x;
+    const thisEnd = i < points.length - 1 ? points[i + 1].x : 1;
+    const minX = prevStart + 0.005;
+    const maxX = thisEnd - 0.005;
+    points[i].x = Math.max(minX, Math.min(maxX, x));
+  } else if (side === 'end' && i < points.length - 1) {
+    // Clamp between this segment's start + tiny gap, and next segment's end - tiny gap
+    const thisStart = points[i].x;
+    const nextEnd = i + 1 < points.length - 1 ? points[i + 2].x : 1;
+    const minX = thisStart + 0.005;
+    const maxX = nextEnd - 0.005;
+    points[i + 1].x = Math.max(minX, Math.min(maxX, x));
   }
-  handleMove(mx, my);
-}, { passive: false });
 
-canvas.addEventListener('touchend', e => {
-  clearTimeout(longPressTimer);
-  const wasDrag = touchMoved;
-  const ts = touchStart;
-
-  dragging = null;
-  dragMode = null;
-  touchStart = null;
-
-  // Quick tap without drag = add a split point
-  if (!wasDrag && ts && Date.now() - ts.time < 300) {
-    const ptIdx = findPoint(ts.mx, ts.my);
-    if (ptIdx < 0) {
-      // Not on an existing point — add a new split
-      handleDown(ts.mx, ts.my, true);
-      dragging = null;
-      dragMode = null;
-    }
-  }
-});
+  refresh();
+}
 
 // --- Presets ---
 
 function resetPoints() {
   const base = paceMultiplierToY(1.0);
   points = [{ x: 0, y: base }];
-  recalc(); draw();
+  selectedSegment = 0;
+  refresh();
 }
 
 function presetNegativeSplit() {
@@ -1022,7 +819,8 @@ function presetNegativeSplit() {
     { x: 0.33, y: b },
     { x: 0.66, y: b - 0.1 },
   ];
-  recalc(); draw();
+  selectedSegment = 0;
+  refresh();
 }
 
 function presetPositiveSplit() {
@@ -1032,7 +830,8 @@ function presetPositiveSplit() {
     { x: 0.33, y: b },
     { x: 0.66, y: b + 0.15 },
   ];
-  recalc(); draw();
+  selectedSegment = 0;
+  refresh();
 }
 
 function presetFadeFinish() {
@@ -1042,28 +841,28 @@ function presetFadeFinish() {
     { x: 0.75, y: b + 0.15 },
     { x: 0.9, y: b + 0.25 },
   ];
-  recalc(); draw();
+  selectedSegment = 0;
+  refresh();
 }
 
-function clearMiddlePoints() {
-  points = [points[0]];
-  recalc(); draw();
+function refresh() {
+  recalc();
+  draw();
+  renderSegmentEditor();
 }
 
 // --- Init ---
 
-distSelect.addEventListener('change', () => { recalc(); draw(); });
-basePaceInput.addEventListener('input', () => { recalc(); draw(); });
+distSelect.addEventListener('change', refresh);
+basePaceInput.addEventListener('input', refresh);
 basePaceInput.addEventListener('blur', () => {
   const pace = parsePace(basePaceInput.value);
   if (pace > 0) basePaceInput.value = decimalToMSS(pace);
 });
-window.addEventListener('resize', () => { recalc(); draw(); });
+window.addEventListener('resize', () => { draw(); });
 
-// Set canvas height
-canvas.style.height = '350px';
-recalc();
-draw();
+canvas.style.height = '300px';
+refresh();
 </script>
 
 </body>
