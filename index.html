@@ -299,7 +299,7 @@
     </div>
     <div class="analysis-stat">
       <span class="analysis-label">Avg</span>
-      <span class="analysis-value" id="avgCombo">--:-- / -- mph</span>
+      <span class="analysis-value" id="avgCombo">--:-- | -- mph</span>
     </div>
   </div>
 </div>
@@ -463,7 +463,7 @@ function recalc() {
   document.getElementById('finishTime').textContent = formatTime(totalMinutes);
   const paceStr = formatPace(avgPacePerUnit) + '/' + (unit === 'mi' ? 'mi' : 'km');
   const speedStr = avgSpeedDisplay.toFixed(1) + (unit === 'mi' ? ' mph' : ' km/h');
-  document.getElementById('avgCombo').textContent = paceStr + '  /  ' + speedStr;
+  document.getElementById('avgCombo').textContent = paceStr + '  |  ' + speedStr;
 
   renderSplits(distKm, basePace);
 }
