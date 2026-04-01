@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="rounded">
+      <rect width="512" height="512" rx="96" ry="96"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#rounded)">
+    <!-- Background -->
+    <rect width="512" height="512" fill="#1a1d27"/>
+
+    <!-- Subtle radial glow behind icon -->
+    <circle cx="256" cy="240" r="180" fill="rgba(99,102,241,0.08)"/>
+
+    <!-- Speed lines -->
+    <g stroke="#6366f1" stroke-linecap="round" opacity="0.5">
+      <line x1="60" y1="200" x2="160" y2="200" stroke-width="6"/>
+      <line x1="80" y1="230" x2="180" y2="230" stroke-width="5"/>
+      <line x1="50" y1="260" x2="150" y2="260" stroke-width="4"/>
+      <line x1="90" y1="290" x2="170" y2="290" stroke-width="5"/>
+    </g>
+
+    <!-- Running shoe - simplified side view -->
+    <g transform="translate(180, 210)">
+      <!-- Sole -->
+      <path d="M-20,80 Q-10,95 30,100 L160,100 Q180,100 190,85 L195,75 Q195,65 180,65 L40,65 Q20,65 -5,70 Z"
+            fill="#6366f1"/>
+      <!-- Sole treads -->
+      <line x1="20" y1="100" x2="25" y2="90" stroke="#1a1d27" stroke-width="3"/>
+      <line x1="50" y1="100" x2="55" y2="90" stroke="#1a1d27" stroke-width="3"/>
+      <line x1="80" y1="100" x2="85" y2="90" stroke="#1a1d27" stroke-width="3"/>
+      <line x1="110" y1="100" x2="115" y2="90" stroke="#1a1d27" stroke-width="3"/>
+      <line x1="140" y1="100" x2="145" y2="90" stroke="#1a1d27" stroke-width="3"/>
+      <!-- Upper shoe body -->
+      <path d="M-5,70 Q0,30 30,15 Q60,0 100,5 Q140,10 170,30 Q185,45 180,65 L40,65 Q20,65 -5,70 Z"
+            fill="#2a2d3a" stroke="#6366f1" stroke-width="2"/>
+      <!-- Shoe tongue -->
+      <path d="M30,15 Q25,-10 40,-20 Q55,-15 50,5"
+            fill="#2a2d3a" stroke="#6366f1" stroke-width="2"/>
+      <!-- Lace area -->
+      <line x1="45" y1="10" x2="80" y2="18" stroke="#6366f1" stroke-width="2" opacity="0.7"/>
+      <line x1="42" y1="22" x2="85" y2="28" stroke="#6366f1" stroke-width="2" opacity="0.7"/>
+      <line x1="40" y1="34" x2="90" y2="38" stroke="#6366f1" stroke-width="2" opacity="0.7"/>
+      <!-- Accent swoosh -->
+      <path d="M20,55 Q60,30 130,25 Q160,24 175,35"
+            fill="none" stroke="#6366f1" stroke-width="4" stroke-linecap="round"/>
+    </g>
+
+    <!-- Small clock element top-right -->
+    <g transform="translate(380, 120)">
+      <circle cx="0" cy="0" r="40" fill="#1a1d27" stroke="#6366f1" stroke-width="3"/>
+      <circle cx="0" cy="0" r="35" fill="none" stroke="#2a2d3a" stroke-width="1"/>
+      <!-- Clock ticks -->
+      <line x1="0" y1="-32" x2="0" y2="-26" stroke="#6366f1" stroke-width="2"/>
+      <line x1="32" y1="0" x2="26" y2="0" stroke="#6366f1" stroke-width="2"/>
+      <line x1="0" y1="32" x2="0" y2="26" stroke="#6366f1" stroke-width="2"/>
+      <line x1="-32" y1="0" x2="-26" y2="0" stroke="#6366f1" stroke-width="2"/>
+      <!-- Clock hands -->
+      <line x1="0" y1="2" x2="0" y2="-20" stroke="#e4e4e7" stroke-width="3" stroke-linecap="round"/>
+      <line x1="0" y1="2" x2="14" y2="-8" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Center dot -->
+      <circle cx="0" cy="0" r="3" fill="#6366f1"/>
+    </g>
+
+    <!-- App name -->
+    <text x="256" y="420" text-anchor="middle" fill="#e4e4e7" font-family="system-ui, sans-serif" font-size="48" font-weight="700" letter-spacing="2">RACECALC</text>
+    <text x="256" y="450" text-anchor="middle" fill="#6366f1" font-family="system-ui, sans-serif" font-size="18" font-weight="500" letter-spacing="4" opacity="0.8">PACE &amp; SPLITS</text>
+  </g>
+</svg>
